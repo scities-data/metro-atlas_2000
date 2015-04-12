@@ -20,3 +20,8 @@ Other data:
 * Road network
 * Water, coastal shape
 * Train
+
+## Data sources
+
+* Census Bureau
+* NHGIS
