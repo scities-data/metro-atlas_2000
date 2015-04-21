@@ -6,13 +6,13 @@
 # DOWNLOAD DATA
 #
 download_2000: download_counties_2000 download_tracts_2000 download_blockgroups_2000 download_blocks_2000
-
+# TODO: Roads, Water
 
 ## Download definition of MSA and write county crosswalk
-data/2000/crosswalks/msa_county.csv data/names/msa.csv: data/gz/99mfips.txt
-	mkdir -p data/crosswalks
-	mkdir -p data/names	
-	python2 bin/data_prep/crosswalk_msa_county.py
+data/2000/crosswalks/msa_county.csv data/2000/names/msa.csv: data/2000/gz/99mfips.txt
+	mkdir -p data/2000/crosswalks
+	mkdir -p data/2000/names	
+	python2 bin/2000/data_prep/crosswalk_msa_county.py
 
 data/2000/gz/99mfips.txt:
 	mkdir -p $(dir $@)
@@ -98,12 +98,13 @@ download_blocks_2000: data/shp/state/01/blocks.shp data/shp/state/02/blocks.shp 
 # EXTRACT CROSSWALKS. COMBINE SHAPES IN MSA FILES.
 #
 process_2000: tracts_2000 blockgroups_2000 blocks_2000
-
+# TODO: counties, roads, water
+# Can be shortened, as all filenames, etc have the same structure!
 
 ## TRACTS
 
 # Extract msa to tracts crosswalk 
-data/2000/crosswalks/msa_tract.csv: data/crosswalks/msa_county.csv
+data/2000/crosswalks/msa_tract.csv: data/2000/crosswalks/msa_county.csv
 	mkdir -p $(dir $@) 
 	python2 bin/2000/crosswalk_msa_tract.py
 
@@ -116,7 +117,7 @@ tracts_2000: data/2000/crosswalks/msa_tract.csv download_tracts_2000
 ## BLOCKGROUPS
 
 # Extract msa to blockgroup crosswalk 
-data/2000/crosswalks/msa_blockgroup.csv: data/crosswalks/msa_county.csv
+data/2000/crosswalks/msa_blockgroup.csv: data/2000/crosswalks/msa_county.csv
 	mkdir -p $(dir $@) 
 	python2 bin/2000/crosswalk_msa_blockgroup.py
 
@@ -130,7 +131,7 @@ blockgroups_2000: data/2000/crosswalks/msa_blockgroup.csv download_blockgroups_2
 ## BLOCKS
 
 # Extract msa to blocks crosswalk 
-data/2000/crosswalks/msa_block.csv: data/crosswalks/msa_county.csv
+data/2000/crosswalks/msa_block.csv: data/2000/crosswalks/msa_county.csv
 	mkdir -p $(dir $@) 
 	python2 bin/2000/crosswalk_msa_block.py
 
@@ -138,3 +139,7 @@ data/2000/crosswalks/msa_block.csv: data/crosswalks/msa_county.csv
 blocks_2000: data/2000/crosswalks/msa_block.csv download_blocks_2000
 	mkdir -p data/shp/msa
 	python2 bin/2000/shape_msa_block.py	
+
+
+# TODO: propose extraction to topojson for web manipulaiton (with
+# simplification)
