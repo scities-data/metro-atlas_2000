@@ -22,6 +22,7 @@ with open('data/2000/crosswalks/msa_blockgroup.csv', 'r') as source:
         msa_to_bg[msa].append(bg)
 
 
+
 #
 # Perform the extraction
 #
