@@ -4,6 +4,7 @@ Extract the crosswalk between 2000 msa and blockgroups
 """
 import os
 import csv
+import fiona
 
 #
 # Import data
