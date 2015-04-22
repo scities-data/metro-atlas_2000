@@ -2,11 +2,20 @@
 ## 2000 Census Metropolitan Areas ##
 ####################################
 
+all_2000:
+
+counties_2000: download_counties_2000 shp_counties_2000
+tracts_2000: download_tracts_2000 shp_tracts_2000
+blockgroups_2000: download_blockgroups_2000 shp_blockgroups_2000
+blocks_2000: download_blocks_2000 shp_blockgroups_2000
+
+
 #
 # DOWNLOAD DATA
 #
 download_2000: download_counties_2000 download_tracts_2000 download_blockgroups_2000 download_blocks_2000
 # TODO: Roads, Water
+
 
 ## Download definition of MSA and write county crosswalk
 data/2000/crosswalks/msa_county.csv data/2000/names/msa.csv: data/2000/gz/99mfips.txt
@@ -97,9 +106,17 @@ download_blocks_2000: data/2000/shp/state/01/blocks.shp data/2000/shp/state/02/b
 #
 # EXTRACT CROSSWALKS. COMBINE SHAPES IN MSA FILES.
 #
-process_2000: tracts_2000 blockgroups_2000 blocks_2000
-# TODO: counties, roads, water
+shp_2000: shp_counties_2000 shp_tracts_2000 shp_blockgroups_2000 shp_blocks_2000
+# TODO: roads, water
 # Can be shortened, as all filenames, etc have the same structure!
+
+
+## COUNTIES
+
+shp_counties_2000: data/2000/crosswalks/msa_county.csv
+	mkdir -p $(dir $@)
+	python2 bin/2000/shape_msa_counties.py
+
 
 ## TRACTS
 
@@ -109,8 +126,8 @@ data/2000/crosswalks/msa_tract.csv: data/2000/crosswalks/msa_county.csv
 	python2 bin/2000/crosswalk_msa_tract.py
 
 # Extract msa tracts shape
-tracts_2000: data/2000/crosswalks/msa_tract.csv download_tracts_2000
-	mkdir -p data/shp/msa
+shp_tracts_2000: data/2000/crosswalks/msa_tract.csv download_tracts_2000
+	mkdir -p data/2000/shp/msa
 	python2 bin/2000/shape_msa_tract.py	
 
 
@@ -122,10 +139,9 @@ data/2000/crosswalks/msa_blockgroup.csv: data/2000/crosswalks/msa_county.csv
 	python2 bin/2000/crosswalk_msa_blockgroup.py
 
 # Extract msa blockgroups shape
-blockgroups_2000: data/2000/crosswalks/msa_blockgroup.csv download_blockgroups_2000
+shp_blockgroups_2000: data/2000/crosswalks/msa_blockgroup.csv download_blockgroups_2000
 	mkdir -p data/shp/msa
 	python2 bin/2000/shape_msa_blockgroup.py	
-
 
 
 ## BLOCKS
@@ -136,7 +152,7 @@ data/2000/crosswalks/msa_block.csv: data/2000/crosswalks/msa_county.csv
 	python2 bin/2000/crosswalk_msa_block.py
 
 # Extract msa blocks shape
-blocks_2000: data/2000/crosswalks/msa_block.csv download_blocks_2000
+shp_blocks_2000: data/2000/crosswalks/msa_block.csv download_blocks_2000
 	mkdir -p data/shp/msa
 	python2 bin/2000/shape_msa_block.py	
 
