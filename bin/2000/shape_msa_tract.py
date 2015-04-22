@@ -11,7 +11,7 @@ import fiona
 # Import MSA to tracts crosswalk 
 #
 msa_to_tract = {}
-with open('data/2000/crosswalks/tract.csv', 'r') as source:
+with open('data/2000/crosswalks/msa_tract.csv', 'r') as source:
     reader = csv.reader(source, delimiter='\t')
     reader.next()
     for rows in reader:
@@ -26,7 +26,10 @@ with open('data/2000/crosswalks/tract.csv', 'r') as source:
 #
 # Perform the extraction
 #
-for msa in msa_to_tract:
+for n,msa in enumerate(msa_to_tract):
+    print "Extract tracts for %s (%s/%s)"%(msa,
+                                        n+1,
+                                        len(msa_to_tract))
     states = list(set([b[:2] for b in msa_to_tract[msa]]))
 
     ## Get all blockgroups
@@ -39,11 +42,11 @@ for msa in msa_to_tract:
                 all_tract[f['properties']['CTIDFP00']] = f['geometry']
 
     ## blockgroups within cbsa
-    msa_tract = {tract: all_bg[tract] for tract in msa_to_tract[msa]}
+    msa_tract = {tract: all_tract[tract] for tract in msa_to_tract[msa]}
 
     ## Save
     if not os.path.isdir('data/2000/shp/msa/%s'%msa):
-        os.mkdir('data/2000/shp/msa/%s'%msa)
+        os.makedirs('data/2000/shp/msa/%s'%msa)
 
     path = 'data/2000/shp/msa/%s/tracts.shp'%msa
     schema = {'geometry': 'Polygon',

@@ -34,9 +34,10 @@ with open('data/state_numbers.csv', 'r') as source:
 ## Import all tracts ids
 tracts = []
 for st in states:
-    path = 'data/2000/shp/states/%s/tracts.shp'%st
-    with fiona.open(path, 'r', 'ESRI Shapefile') as f:
-        tracts.append(f['properties']['CTIDFP00'])
+    path = 'data/2000/shp/state/%s/tracts.shp'%st
+    with fiona.open(path, 'r', 'ESRI Shapefile') as source:
+        for f in source:
+            tracts.append(f['properties']['CTIDFP00'])
 
 
 
