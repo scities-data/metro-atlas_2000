@@ -34,9 +34,10 @@ with open('data/state_numbers.csv', 'r') as source:
 ## Import all blockgroup ids
 blockgroups = []
 for st in states:
-    path = 'data/2000/shp/states/%s/blockgroups.shp'%st
-    with fiona.open(path, 'r', 'ESRI Shapefile') as f:
-        blockgroups.append(f['properties']['BKGPIDFP00'])
+    path = 'data/2000/shp/state/%s/blockgroups.shp'%st
+    with fiona.open(path, 'r', 'ESRI Shapefile') as source:
+        for f in source:
+            blockgroups.append(f['properties']['BKGPIDFP00'])
 
 
 

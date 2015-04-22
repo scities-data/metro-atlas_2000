@@ -77,7 +77,7 @@ download_blockgroups_2000: data/2000/shp/state/01/blockgroups.shp data/2000/shp/
 ## Download census blocks
 data/2000/gz/tl_2010_%_tabblock00.zip:
 	mkdir -p $(dir $@)
-	curl 'http://www2.census.gov/geo/tiger/TIGER2010/TABBLOCK/2000/tl_2010_%_tabblock00.zip' -o $@.download
+	curl 'http://www2.census.gov/geo/tiger/TIGER2010/TABBLOCK/2000/$(notdir $@)' -o $@.download
 	mv $@.download $@
 
 data/2000/shp/state/%/blocks.shp: data/2000/gz/tl_2010_%_tabblock00.zip

@@ -26,7 +26,10 @@ with open('data/2000/crosswalks/msa_blockgroup.csv', 'r') as source:
 #
 # Perform the extraction
 #
-for msa in msa_to_bg:
+for n,msa in enumerate(msa_to_bg):
+    print "Extract blockgroups for %s (%s/%s)"%(msa,
+                                                n+1,
+                                                len(msa_to_bg))
     states = list(set([b[:2] for b in msa_to_bg[msa]]))
 
     ## Get all blockgroups
@@ -43,7 +46,7 @@ for msa in msa_to_bg:
 
     ## Save
     if not os.path.isdir('data/2000/shp/msa/%s'%msa):
-        os.mkdir('data/2000/shp/msa/%s'%msa)
+        os.makedirs('data/2000/shp/msa/%s'%msa)
 
     schema = {'geometry': 'Polygon',
               'properties': {'BKGPIDFP00': 'str'}}
