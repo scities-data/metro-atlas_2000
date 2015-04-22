@@ -115,7 +115,7 @@ shp_2000: shp_counties_2000 shp_tracts_2000 shp_blockgroups_2000 shp_blocks_2000
 
 shp_counties_2000: data/2000/crosswalks/msa_county.csv
 	mkdir -p $(dir $@)
-	python2 bin/2000/shape_msa_counties.py
+	python2 bin/2000/shape_msa_county.py
 
 
 ## TRACTS
