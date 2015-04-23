@@ -34,23 +34,24 @@ with open('data/state_numbers.csv', 'r') as source:
 ## Import all blockgroup ids
 blocks = []
 for st in states:
-    path = 'data/2000/shp/states/%s/blocks.shp'%st
-    with fiona.open(path, 'r', 'ESRI Shapefile') as f:
-        blocks.append(f['properties']['BLKIDFP00'])
+    path = 'data/2000/shp/state/%s/blocks.shp'%st
+    with fiona.open(path, 'r', 'ESRI Shapefile') as source:
+        for f in source:
+            blocks.append(f['properties']['BLKIDFP00'])
 
 
 
 #
 # Group by MSA
 #
-msa_group = {}
-for b in groups:
+msa_block = {}
+for b in blocks:
     county = b[:5]
     if county in county_to_msa:
         msa = county_to_msa[county]
-        if msa not in msa_group:
-            msa_group[msa] = []
-        msa_group[msa].append(b)
+        if msa not in msa_block:
+            msa_block[msa] = []
+        msa_block[msa].append(b)
 
 
 

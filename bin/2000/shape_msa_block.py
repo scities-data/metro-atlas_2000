@@ -26,7 +26,10 @@ with open('data/2000/crosswalks/msa_block.csv', 'r') as source:
 #
 # Perform the extraction
 #
-for msa in msa_to_block:
+for n,msa in enumerate(msa_to_block):
+    print "Extract blocks for %s (%s/%s)"%(msa,
+                                        n+1,
+                                        len(msa_to_block))
     states = list(set([b[:2] for b in msa_to_block[msa]]))
 
     ## Get all blockgroups
