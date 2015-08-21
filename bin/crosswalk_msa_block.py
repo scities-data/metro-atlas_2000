@@ -13,7 +13,7 @@ import fiona
 ## MSA to counties crosswalk
 # county_to_msa = {county: {msa: [cousub ids]}
 county_to_msa = {}
-with open('data/2000/crosswalks/msa_county.csv', 'r') as source:
+with open('data/crosswalks/msa_county.csv', 'r') as source:
     reader = csv.reader(source, delimiter='\t')
     reader.next()
     for rows in reader:
@@ -34,7 +34,7 @@ with open('data/state_numbers.csv', 'r') as source:
 ## Import all blockgroup ids
 blocks = []
 for st in states:
-    path = 'data/2000/shp/state/%s/blocks.shp'%st
+    path = 'data/shp/state/%s/blocks.shp'%st
     with fiona.open(path, 'r', 'ESRI Shapefile') as source:
         for f in source:
             blocks.append(f['properties']['BLKIDFP00'])
@@ -59,7 +59,7 @@ for b in blocks:
 #
 # Save the crosswalk 
 #
-with open('data/2000/crosswalks/msa_block.csv', 'w') as output:
+with open('data/crosswalks/msa_block.csv', 'w') as output:
     output.write('MSA FIP\tBLOCK FIP\n')
     for msa in msa_block:
         ## Remove duplicates

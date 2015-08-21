@@ -11,7 +11,7 @@ import fiona
 # Import MSA to tracts crosswalk 
 #
 msa_to_tract = {}
-with open('data/2000/crosswalks/msa_tract.csv', 'r') as source:
+with open('data/crosswalks/msa_tract.csv', 'r') as source:
     reader = csv.reader(source, delimiter='\t')
     reader.next()
     for rows in reader:
@@ -35,7 +35,7 @@ for n,msa in enumerate(msa_to_tract):
     ## Get all blockgroups
     all_tract = {}
     for st in states:
-        with fiona.open('data/2000/shp/state/%s/tracts.shp'%st, 'r',
+        with fiona.open('data/shp/state/%s/tracts.shp'%st, 'r',
                 'ESRI Shapefile') as source:
             source_crs = source.crs
             for f in source:
@@ -45,10 +45,10 @@ for n,msa in enumerate(msa_to_tract):
     msa_tract = {tract: all_tract[tract] for tract in msa_to_tract[msa]}
 
     ## Save
-    if not os.path.isdir('data/2000/shp/msa/%s'%msa):
-        os.makedirs('data/2000/shp/msa/%s'%msa)
+    if not os.path.isdir('data/shp/msa/%s'%msa):
+        os.makedirs('data/shp/msa/%s'%msa)
 
-    path = 'data/2000/shp/msa/%s/tracts.shp'%msa
+    path = 'data/shp/msa/%s/tracts.shp'%msa
     schema = {'geometry': 'Polygon',
               'properties': {'CTIDFP00': 'str'}}
     with fiona.open(path, 'w','ESRI Shapefile',

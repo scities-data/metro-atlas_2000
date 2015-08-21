@@ -28,7 +28,7 @@ msa.csv: names of MSAs
 begin_file = 22
 end_file = 2173
 msa = {}
-with open('data/2000/gz/99mfips.txt', 'r') as source:
+with open('data/gz/99mfips.txt', 'r') as source:
     line = source.readline()
     l = 1
     while line:
@@ -67,7 +67,7 @@ msa = {fip:data for fip, data in msa.iteritems()
 #
 # Save the crosswalk
 #
-with open("data/2000/crosswalks/msa_county.csv", "w") as output:
+with open("data/crosswalks/msa_county.csv", "w") as output:
     output.write("MSA FIPS CODE\tCOUNTY FIPS CODE\n")
     for city in msa:
         for county in msa[city]['counties']:
@@ -77,7 +77,7 @@ with open("data/2000/crosswalks/msa_county.csv", "w") as output:
 #
 # Save the names
 #
-with open("data/2000/names/msa.csv", "w") as output:
+with open("data/names/msa.csv", "w") as output:
     output.write("MSA FIPS CODE\t Name\n")
     for city in msa:
         output.write("%s\t%s\n"%(city, msa[city]['name']))

@@ -11,7 +11,7 @@ import fiona
 # Import MSA to blockgroup crosswalk 
 #
 msa_to_block = {}
-with open('data/2000/crosswalks/msa_block.csv', 'r') as source:
+with open('data/crosswalks/msa_block.csv', 'r') as source:
     reader = csv.reader(source, delimiter='\t')
     reader.next()
     for rows in reader:
@@ -35,7 +35,7 @@ for n,msa in enumerate(msa_to_block):
     ## Get all blockgroups
     all_block = {}
     for st in states:
-        with fiona.open('data/2000/shp/state/%s/blocks.shp'%st, 'r',
+        with fiona.open('data/shp/state/%s/blocks.shp'%st, 'r',
                 'ESRI Shapefile') as source:
             source_crs = source.crs
             for f in source:
@@ -45,12 +45,12 @@ for n,msa in enumerate(msa_to_block):
     msa_block = {block: all_block[block] for block in msa_to_block[msa]}
 
     ## Save
-    if not os.path.isdir('data/2000/shp/msa/%s'%msa):
-        os.mkdir('data/2000/shp/msa/%s'%msa)
+    if not os.path.isdir('data/shp/msa/%s'%msa):
+        os.mkdir('data/shp/msa/%s'%msa)
 
     schema = {'geometry': 'Polygon',
               'properties': {'BLKIDFP00': 'str'}}
-    with fiona.open('data/2000/shp/msa/%s/blocks.shp'%msa, 'w', 
+    with fiona.open('data/shp/msa/%s/blocks.shp'%msa, 'w', 
             'ESRI Shapefile',
             crs = source_crs,
             schema = schema) as output:
