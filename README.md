@@ -22,7 +22,7 @@ make blockgroups
 ```
 
 The program will download the necessary data, and the shapefiles will be
-available in the folder `data/shp/msa_id/blockgroups`
+available in the folder `data/shp/msa_id/`
 
 ## License
 
