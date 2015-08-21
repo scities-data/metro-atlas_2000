@@ -7,10 +7,22 @@ Census. Inspired by Mike Bostock's [us-atlas](https://github.com/mbostock/us-atl
 
 Data tabulation geographical levels:
 
-* Census Blocks boundaries (make blocks_2000)
-* Census Block Groups boundaries (make blockgroups_2000)
-* Census Tracts boundaries (make tracts_2000)
-* Counties boundaries (make countries_2000)
+* Census Blocks boundaries (blocks)
+* Census Block Groups boundaries (blockgroups)
+* Census Tracts boundaries (tracts)
+* Counties boundaries (countries)
+
+## Use
+
+In the commande line, go in the folder where you cloned the repository, and type
+(to get the blockgroups)
+
+```bash
+make blockgroups
+```
+
+The program will download the necessary data, and the shapefiles will be
+available in the folder `data/shp/msa_id/blockgroups`
 
 ## License
 
