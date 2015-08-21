@@ -2,12 +2,12 @@
 ## 2000 Census Metropolitan Areas ##
 ####################################
 
-2000: counties_2000 tracts_2000 blockgroups_2000 blocks_2000
+2000: counties tracts blockgroups blocks
 
-counties_2000: shp_counties_2000
-tracts_2000: shp_tracts_2000
-blockgroups_2000: shp_blockgroups_2000
-blocks_2000: shp_blocks_2000
+counties: shp_counties_2000
+tracts: shp_tracts_2000
+blockgroups: shp_blockgroups_2000
+blocks: shp_blocks_2000
 
 
 
