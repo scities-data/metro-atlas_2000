@@ -2,9 +2,10 @@
 ## 2000 Census Metropolitan Areas ##
 ####################################
 
-2000: counties tracts blockgroups blocks msa
+2000: counties tracts blockgroups blocks msa us
 
 # Census Geographies
+us: shp_us_2000
 msa: shp_msa_2000
 counties: shp_counties_2000
 tracts: shp_tracts_2000
@@ -17,10 +18,11 @@ blocks: shp_blocks_2000
 #landmarks:
 
 
+
 #
 # DOWNLOAD DATA
 #
-download_2000: download_counties_2000 download_tracts_2000 download_blockgroups_2000 download_blocks_2000
+download_2000: download_us_2000 download_counties_2000 download_tracts_2000 download_blockgroups_2000 download_blocks_2000
 # TODO: Roads, Water
 
 
@@ -35,6 +37,21 @@ data/gz/99mfips.txt:
 	curl "http://www.census.gov/population/metro/files/lists/historical/$(notdir $@)" -o $@.download
 	mv $@.download $@
 
+
+## Download national boundaries
+data/gz/%.tar.gz:
+	mkdir -p $(dir $@)
+	curl 'http://dds.cr.usgs.gov/pub/data/nationalatlas/$(notdir $@)' -o $@.download
+	mv $@.download $@
+
+data/shp/us/us_unmerged.shp: data/gz/nationalp010g_nt00797.tar.gz
+	rm -rf $(basename $@)
+	mkdir -p $(basename $@)
+	tar -xzm -C $(basename $@) -f $<
+	for file in $(basename $@)/*; do chmod 644 $$file; mv $$file $(basename $@).$${file##*.}; done
+	rmdir $(basename $@)
+
+download_us_2000: data/shp/us/us_unmerged.shp 
 
 
 ## Download counties
@@ -113,17 +130,21 @@ download_blocks_2000: data/shp/state/01/blocks.shp data/shp/state/02/blocks.shp 
 #
 # EXTRACT CROSSWALKS. COMBINE SHAPES IN MSA FILES.
 #
-shp_2000: shp_msa_2000 shp_counties_2000 shp_tracts_2000 shp_blockgroups_2000 shp_blocks_2000
+shp_2000: shp_us_2000 shp_msa_2000 shp_counties_2000 shp_tracts_2000 shp_blockgroups_2000 shp_blocks_2000
 # TODO: roads, water
 # Can be shortened, as all filenames, etc have the same structure!
 
+## US
+shp_us_2000: download_us_2000
+	python2 bin/shape_us.py
+	rm data/shp/us/us_unmerged*
 
 ## Metropolitan Statistical areas
 shp_msa_2000: data/crosswalks/msa_county.csv
 	python2 bin/shape_msa.py
 
 ## COUNTIES
-shp_counties_2000: data/crosswalks/msa_county.csv
+shp_counties_2000: data/crosswalks/msa_county.csv download_counties_2000
 	python2 bin/shape_msa_county.py
 
 

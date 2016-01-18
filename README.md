@@ -7,6 +7,7 @@ Census. Inspired by Mike Bostock's [us-atlas](https://github.com/mbostock/us-atl
 
 Data tabulation geographical levels for the 2000 US Census:
 
+* US boudaries
 * MSA boundaries
 * Census Blocks boundaries (blocks)
 * Census Block Groups boundaries (blockgroups)
@@ -19,7 +20,6 @@ The following features are obtained from the 2010 TIGER/Lines shapefiles and cut
 using the 2000 boundaries. Considering the conversion of 2000 TIGER/Lines files
 to shapefiles.
 
-* US boudaries
 * Roads
 * Water
 * Landmarks
