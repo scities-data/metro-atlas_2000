@@ -4,11 +4,17 @@
 
 2000: counties tracts blockgroups blocks
 
+# Census Geographies
+#msa: shp_msa_2000
 counties: shp_counties_2000
 tracts: shp_tracts_2000
 blockgroups: shp_blockgroups_2000
 blocks: shp_blocks_2000
 
+# Other features
+#roads:
+#water:
+#landmarks:
 
 
 #
