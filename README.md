@@ -7,8 +7,8 @@ Census. Inspired by Mike Bostock's [us-atlas](https://github.com/mbostock/us-atl
 
 Data tabulation geographical levels for the 2000 US Census:
 
-* US boudaries
-* MSA boundaries
+* US boudaries (us)
+* MSA boundaries (msa)
 * Census Blocks boundaries (blocks)
 * Census Block Groups boundaries (blockgroups)
 * Census Tracts boundaries (tracts)
@@ -36,6 +36,15 @@ make blockgroups
 The program will download the necessary data, and the shapefiles will be
 available in the folder `data/shp/msa_id/`
 
+To get other geographies, type the name of other geographies in parenthesis
+above instead of 'blockgroups'. If you type `make` alone, the program will
+download and prepare all geographies.
+
 ## License
 
-The code is distributed under the BSD License.
+The code is distributed under the BSD License, see LICENSE.txt for more details.
+
+```
+Copyright (c) Scities
+Rémi Louf <remi.louf@sciti.es>
+```
