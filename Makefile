@@ -144,20 +144,20 @@ shp: shp_us shp_msa shp_counties shp_tracts shp_blockgroups shp_blocks
 
 # United States
 shp_us: download_us
-	python bin/shape_us.py
+	python bin/shp/us.py
 	rm data/shp/us/us_unmerged*
 
 
 
 # Metropolitan Statistical areas
 shp_msa: data/crosswalks/msa_county.csv
-	python bin/shape_msa.py
+	python bin/shp/msa.py
 
 
 
 # Counties
 shp_counties: data/crosswalks/msa_county.csv download_counties
-	python bin/shape_msa_county.py
+	python bin/shp/counties.py
 
 
 
@@ -170,7 +170,7 @@ data/crosswalks/msa_tract.csv: data/crosswalks/msa_county.csv
 ## Tract boundaries cut at the MSA level
 shp_tracts: data/crosswalks/msa_tract.csv download_tracts
 	mkdir -p data/shp/msa
-	python bin/shape_msa_tract.py	
+	python bin/shp/tracts.py	
 
 
 
@@ -183,7 +183,7 @@ data/crosswalks/msa_blockgroup.csv: data/crosswalks/msa_county.csv
 # Blockgroup boundaries at the MSA level
 shp_blockgroups: data/crosswalks/msa_blockgroup.csv download_blockgroups
 	mkdir -p data/shp/msa
-	python bin/shape_msa_blockgroup.py	
+	python bin/shp/blockgroups.py	
 
 
 
@@ -196,4 +196,4 @@ data/crosswalks/msa_block.csv: data/crosswalks/msa_county.csv
 # Block boundaries cut at the MSA level
 shp_blocks: data/crosswalks/msa_block.csv download_blocks
 	mkdir -p data/shp/msa
-	python bin/shape_msa_block.py	
+	python bin/shp/blocks.py	
