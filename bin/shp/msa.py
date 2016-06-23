@@ -1,4 +1,4 @@
-"""shape_msa.py
+""" msa.py
 
 Output one shapefile per MSA containing its boundaries.
 """
@@ -12,7 +12,7 @@ from shapely.geometry import mapping, shape
 # Import MSA to blockgroup crosswalk 
 #
 msa_to_county = {}
-with open('data/crosswalks/msa_county.csv', 'r') as source:
+with open('data/crosswalks/msa_counties.csv', 'r') as source:
     reader = csv.reader(source, delimiter='\t')
     reader.next()
     for rows in reader:

@@ -1,4 +1,4 @@
-"""shape_msa_block.py
+""" blocks.py
 
 Output one shapefile per MSA featuring all the blocks it contains
 """
@@ -11,7 +11,7 @@ import fiona
 # Import MSA to blockgroup crosswalk 
 #
 msa_to_block = {}
-with open('data/crosswalks/msa_block.csv', 'r') as source:
+with open('data/crosswalks/msa_blocks.csv', 'r') as source:
     reader = csv.reader(source, delimiter='\t')
     reader.next()
     for rows in reader:

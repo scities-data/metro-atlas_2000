@@ -1,4 +1,4 @@
-"""shape_msa_county.py
+""" counties.py
 
 Output one shapefile per MSA containing all the counties it contains
 """
@@ -11,7 +11,7 @@ import fiona
 # Import MSA to blockgroup crosswalk 
 #
 msa_to_county = {}
-with open('data/crosswalks/msa_county.csv', 'r') as source:
+with open('data/crosswalks/msa_counties.csv', 'r') as source:
     reader = csv.reader(source, delimiter='\t')
     reader.next()
     for rows in reader:

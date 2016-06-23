@@ -1,4 +1,4 @@
-"""shape_us.py
+""" us.py
 
 Output one shapefile for the entire US (MultiPolygon).
 """
