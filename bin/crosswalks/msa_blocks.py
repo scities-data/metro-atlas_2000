@@ -1,6 +1,6 @@
-"""crosswalk_msa_blockgroup.py
+""" msa_blocks.py
 
-Extract the crosswalk between 2000 msa and blockgroups
+Extract the crosswalk between 2000 msa and blocks
 """
 import os
 import csv
@@ -32,26 +32,26 @@ with open('data/state_numbers.csv', 'r') as source:
 
 
 ## Import all blockgroup ids
-blockgroups = []
+blocks = []
 for st in states:
-    path = 'data/shp/state/%s/blockgroups.shp'%st
+    path = 'data/shp/state/%s/blocks.shp'%st
     with fiona.open(path, 'r', 'ESRI Shapefile') as source:
         for f in source:
-            blockgroups.append(f['properties']['BKGPIDFP00'])
+            blocks.append(f['properties']['BLKIDFP00'])
 
 
 
 #
 # Group by MSA
 #
-msa_blockgroup = {}
-for bg in blockgroups:
-    county = bg[:5]
+msa_block = {}
+for b in blocks:
+    county = b[:5]
     if county in county_to_msa:
         msa = county_to_msa[county]
-        if msa not in msa_blockgroup:
-            msa_blockgroup[msa] = []
-        msa_blockgroup[msa].append(bg)
+        if msa not in msa_block:
+            msa_block[msa] = []
+        msa_block[msa].append(b)
 
 
 
@@ -59,10 +59,10 @@ for bg in blockgroups:
 #
 # Save the crosswalk 
 #
-with open('data/crosswalks/msa_blockgroup.csv', 'w') as output:
-    output.write('MSA FIP\tBLOCKGROUP FIP\n')
-    for msa in msa_blockgroup:
+with open('data/crosswalks/msa_blocks.csv', 'w') as output:
+    output.write('MSA FIP\tBLOCK FIP\n')
+    for msa in msa_block:
         ## Remove duplicates
-        bgs = list(set(msa_blockgroup[msa]))
-        for bg in bgs:
-            output.write('%s\t%s\n'%(msa, bg))
+        bs = list(set(msa_block[msa]))
+        for b in bs:
+            output.write('%s\t%s\n'%(msa, b))

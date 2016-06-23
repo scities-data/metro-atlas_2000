@@ -1,4 +1,4 @@
-"""build_2000_msa.py
+""" msa_counties.py
 
 Extract a usable crosswalk between 2000 Metropolitan areas and counties.
 Reconstitute a shapefile for the 2000 MSAs from the counties.
@@ -67,7 +67,7 @@ msa = {fip:data for fip, data in msa.iteritems()
 #
 # Save the crosswalk
 #
-with open("data/crosswalks/msa_county.csv", "w") as output:
+with open("data/crosswalks/msa_counties.csv", "w") as output:
     output.write("MSA FIPS CODE\tCOUNTY FIPS CODE\n")
     for city in msa:
         for county in msa[city]['counties']:

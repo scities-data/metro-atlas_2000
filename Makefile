@@ -35,7 +35,7 @@ download: download_us download_counties download_tracts download_blockgroups dow
 data/crosswalks/msa_county.csv data/names/msa.csv: data/gz/99mfips.txt
 	mkdir -p data/crosswalks
 	mkdir -p data/names	
-	python bin/crosswalk_msa_county.py
+	python bin/crosswalks/msa_counties.py
 
 data/gz/99mfips.txt:
 	mkdir -p $(dir $@)
@@ -165,7 +165,7 @@ shp_counties: data/crosswalks/msa_county.csv download_counties
 ## MSA to tracts crosswalk
 data/crosswalks/msa_tract.csv: data/crosswalks/msa_county.csv
 	mkdir -p $(dir $@) 
-	python bin/crosswalk_msa_tract.py
+	python bin/crosswalks/msa_tracts.py
 
 ## Tract boundaries cut at the MSA level
 shp_tracts: data/crosswalks/msa_tract.csv download_tracts
@@ -178,7 +178,7 @@ shp_tracts: data/crosswalks/msa_tract.csv download_tracts
 # MSA to tracts crosswalk
 data/crosswalks/msa_blockgroup.csv: data/crosswalks/msa_county.csv
 	mkdir -p $(dir $@) 
-	python bin/crosswalk_msa_blockgroup.py
+	python bin/crosswalks/msa_blockgroups.py
 
 # Blockgroup boundaries at the MSA level
 shp_blockgroups: data/crosswalks/msa_blockgroup.csv download_blockgroups
@@ -191,7 +191,7 @@ shp_blockgroups: data/crosswalks/msa_blockgroup.csv download_blockgroups
 ## MSA to blocks crosswalk
 data/crosswalks/msa_block.csv: data/crosswalks/msa_county.csv
 	mkdir -p $(dir $@) 
-	python bin/crosswalk_msa_block.py
+	python bin/crosswalks/msa_blocks.py
 
 # Block boundaries cut at the MSA level
 shp_blocks: data/crosswalks/msa_block.csv download_blocks
